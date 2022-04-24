@@ -13,6 +13,8 @@ router.get('/', (req, res) => {
         });
 });
 
+
+// get user by ID
 router.get('/:id', (req, res) => {
     User.findOne({
         attributes: { exclude: ['password'] },
@@ -22,7 +24,7 @@ router.get('/:id', (req, res) => {
         include: [
             {
                 model: Post,
-                attributes: ['id', 'title', 'post_url', 'created_at']
+                attributes: ['id', 'title', 'post_body', 'created_at']
             },
             {
                 model: Comment,
@@ -47,6 +49,8 @@ router.get('/:id', (req, res) => {
         });
 });
 
+// create new user with sign up
+
 router.post('/signup', (req, res) => {
     
     User.create({
@@ -69,6 +73,7 @@ router.post('/signup', (req, res) => {
         });
 });
 
+// create new login instance with existing user
 router.post('/login', (req, res) => {
 
     User.findOne({
@@ -98,6 +103,8 @@ router.post('/login', (req, res) => {
     });
 });
 
+// create new logout instance with existing user
+
 router.post('/logout', (req, res) => {
     if (req.session.loggedIn) {
         req.session.destroy(() => {
@@ -109,8 +116,9 @@ router.post('/logout', (req, res) => {
     }
 });
 
+// update user credentials by id
 router.put('/:id', (req, res) => {
-    // pass in req.body instead to only update what's passed through
+   
     User.update(req.body, {
         individualHooks: true,
         where: {
@@ -130,6 +138,7 @@ router.put('/:id', (req, res) => {
         });
 });
 
+// delete user by ID
 router.delete('/:id', (req, res) => {
     User.destroy({
         where: {

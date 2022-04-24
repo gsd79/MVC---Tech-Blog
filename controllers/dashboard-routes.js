@@ -13,8 +13,8 @@ router.get('/', withAuth, (req, res) => {
         },
         attributes: [
             'id',
-            'post_url',
             'title',
+            'post_body',
             'created_at'            
         ],
         include: [
@@ -42,12 +42,14 @@ router.get('/', withAuth, (req, res) => {
         });
 });
 
+// find all posts by userid with option to edit
+
 router.get('/edit/:id', withAuth, (req, res) => {
     Post.findByPk(req.params.id, {
         attributes: [
             'id',
-            'post_url',
             'title',
+            'post_body',
             'created_at'           
         ],
         include: [
